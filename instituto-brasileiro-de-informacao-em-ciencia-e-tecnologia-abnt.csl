@@ -23,6 +23,10 @@
       <name>Diego José Macêdo</name>
       <email>diegomacedo@ibict.br</email>
     </contributor>
+    <contributor>
+      <name>Rebeca dos Santos de Moura</name>
+      <email>rebecamoura@ibict.br</email>
+    </contributor>
     <category citation-format="author-date"/>
     <category field="generic-base"/>
     <summary>The Brazilian Standard Style by IBICT</summary>
@@ -50,10 +54,19 @@
       </term>
       <term name="collection-editor" form="short">
         <single>ed.</single>
-        <multiple>eds.</multiple>
+        <multiple>ed.</multiple>
       </term>
       <term name="collection-editor" form="verb">editado por</term>
       <term name="collection-editor" form="verb-short">ed.</term>
+      <!-- Correção de Org -->
+      <term name="editor" form="short">
+        <single>org</single>
+        <multiple>org</multiple>
+      </term>
+      <term name="collection-editor" form="short">
+        <single>org</single>
+        <multiple>org</multiple>
+      </term>
     </terms>
   </locale>
   <macro name="container-contributors">
@@ -61,13 +74,13 @@
       <if type="chapter">
         <text value="In" font-style="italic"/>
         <text value=": "/>
-        <names variable="container-author" delimiter=", ">
+        <names variable="container-author" delimiter=", " suffix=". ">
           <name name-as-sort-order="all" sort-separator=", " delimiter="; " delimiter-precedes-last="always">
             <name-part name="family" text-case="uppercase"/>
             <name-part name="given"/>
           </name>
           <et-al font-style="italic"/>
-          <label form="short" prefix=" (" suffix=".). "/>
+          <label form="short" prefix=" (" suffix=".)" text-case="lowercase"/>
           <substitute>
             <names variable="editor"/>
             <names variable="collection-editor"/>
@@ -105,7 +118,7 @@
             <name-part name="given"/>
           </name>
           <et-al font-style="italic"/>
-          <label form="short" prefix=" (" suffix=".)" text-case="capitalize-first"/>
+          <label form="short" prefix=" (" suffix=".)" text-case="lowercase"/>
           <substitute>
             <names variable="editor"/>
             <names variable="collection-editor"/>
@@ -121,7 +134,7 @@
             <name-part name="given"/>
           </name>
           <et-al font-style="italic"/>
-          <label form="short" prefix=" (" suffix=".)" text-case="capitalize-first"/>
+          <label form="short" prefix=" (" suffix=".)" text-case="lowercase"/>
           <substitute>
             <names variable="editor"/>
             <names variable="collection-editor"/>
@@ -135,7 +148,7 @@
   <macro name="author-short">
     <names variable="author">
       <name form="short" name-as-sort-order="all" sort-separator=", " delimiter="; " delimiter-precedes-last="always">
-        <name-part name="family" text-case="uppercase"/>
+        <name-part name="family" text-case="capitalize-first"/>
         <name-part name="given"/>
       </name>
       <et-al font-style="italic"/>
@@ -330,13 +343,21 @@
           </if>
         </choose>
       </if>
-      <else-if type="book chapter paper-conference" match="any">
+      <else-if type="book chapter" match="any">
         <choose>
           <if variable="volume" match="any">
             <text term="volume" form="short"/>
             <text variable="volume" prefix=" " suffix=", "/>
           </if>
         </choose>
+        <choose>
+          <if variable="page" match="any">
+            <text term="page" form="short"/>
+            <text variable="page" prefix=" "/>
+          </if>
+        </choose>
+      </else-if>
+      <else-if type="paper-conference" match="any">
         <choose>
           <if variable="page" match="any">
             <text term="page" form="short"/>
@@ -384,6 +405,7 @@
     <layout prefix="(" suffix=")" delimiter="; ">
       <group>
         <text suffix=", " macro="author-short"/>
+        <!-- text-case="capitalize-first -->
         <text macro="issued-year"/>
         <text prefix=", " macro="citation-locator"/>
       </group>
@@ -498,9 +520,8 @@
             <text macro="title" suffix=". "/>
             <text macro="event" suffix=", "/>
             <text variable="volume" suffix="., "/>
-            <text macro="issued" suffix="."/>
             <!-- On Zotero, use the field 'Extra' for the event location.-->
-            <text variable="note" prefix=", "/>
+            <text variable="note"/>
             <text macro="container-title" prefix=". "/>
             <text macro="publisher" prefix=". "/>
             <text macro="issued" prefix=", "/>
